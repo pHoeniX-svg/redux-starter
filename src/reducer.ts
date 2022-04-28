@@ -1,4 +1,4 @@
-import * as actions from './actions';
+import * as actions from './action-types';
 import { BugActions, BugState } from './types';
 
 let lastId = 0;
@@ -15,8 +15,19 @@ export const reducer = (state = initialState, action: BugActions) => {
           resolved: false,
         },
       ];
+
     case actions.BUG_REMOVED:
       return state.filter((bug) => bug.id !== action.payload.id);
+
+    case actions.BUG_RESOLVED:
+      return state.map((bug) =>
+        bug.id === action.payload.id
+          ? {
+              ...bug,
+              resolved: true,
+            }
+          : bug
+      );
     default:
       return state;
   }

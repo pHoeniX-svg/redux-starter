@@ -11,6 +11,12 @@ type BugRemoved = {
     id: string | number;
   };
 };
+type BugResolved = {
+  type: 'RESOLVE_BUG';
+  payload: {
+    id: string | number;
+  };
+};
 
 export interface IBug {
   id: string | number;
@@ -19,4 +25,4 @@ export interface IBug {
 }
 
 export type BugState = IBug[];
-export type BugActions = BugAdded | BugRemoved;
+export type BugActions = BugAdded | BugRemoved | BugResolved;
