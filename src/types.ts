@@ -1,19 +1,19 @@
 type BugAdded = {
-  type: 'BUG_ADDED';
+  type: 'ADD_BUG';
   payload: {
     description: string;
   };
 };
 
 type BugRemoved = {
-  type: 'BUG_REMOVED';
+  type: 'REMOVE_BUG';
   payload: {
-    id: number;
+    id: string;
   };
 };
 
 export interface IBug {
-  id: number;
+  id: string;
   description: string;
   resolved: boolean;
 }
