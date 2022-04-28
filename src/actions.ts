@@ -1,0 +1,4 @@
+const BUG_ADDED = 'ADD_BUG';
+const BUG_REMOVED = 'REMOVE_BUG';
+
+export { BUG_ADDED, BUG_REMOVED };

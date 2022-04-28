@@ -8,12 +8,12 @@ type BugAdded = {
 type BugRemoved = {
   type: 'REMOVE_BUG';
   payload: {
-    id: string;
+    id: string | number;
   };
 };
 
 export interface IBug {
-  id: string;
+  id: string | number;
   description: string;
   resolved: boolean;
 }
