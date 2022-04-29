@@ -1,15 +1,20 @@
 import * as actions from './action-types';
 import { BugActions } from './types';
 
-export const bugAdded = (description: string): BugActions => ({
-  type: actions.BUG_ADDED,
+export const addBug = (description: string): BugActions => ({
+  type: actions.ADD_BUG,
   payload: {
     description,
   },
 });
-
-export const bugResolved = (id: number): BugActions => ({
-  type: actions.BUG_RESOLVED,
+export const removeBug = (id: number): BugActions => ({
+  type: actions.REMOVE_BUG,
+  payload: {
+    id,
+  },
+});
+export const resolveBug = (id: number): BugActions => ({
+  type: actions.RESOLVE_BUG,
   payload: {
     id,
   },

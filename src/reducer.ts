@@ -6,7 +6,7 @@ const initialState: BugState = [];
 
 export const reducer = (state = initialState, action: BugActions) => {
   switch (action.type) {
-    case actions.BUG_ADDED:
+    case actions.ADD_BUG:
       return [
         ...state,
         {
@@ -16,10 +16,10 @@ export const reducer = (state = initialState, action: BugActions) => {
         },
       ];
 
-    case actions.BUG_REMOVED:
+    case actions.REMOVE_BUG:
       return state.filter((bug) => bug.id !== action.payload.id);
 
-    case actions.BUG_RESOLVED:
+    case actions.RESOLVE_BUG:
       return state.map((bug) =>
         bug.id === action.payload.id
           ? {

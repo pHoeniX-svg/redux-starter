@@ -4,7 +4,6 @@ type BugAdded = {
     description: string;
   };
 };
-
 type BugRemoved = {
   type: 'REMOVE_BUG';
   payload: {
