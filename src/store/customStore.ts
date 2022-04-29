@@ -1,5 +1,4 @@
-import { reducer } from './reducer';
-
+import reducer from './bugs';
 type Listener = () => void;
 
 function createStore<T, A>(reducer: (state: T, action: A) => T) {

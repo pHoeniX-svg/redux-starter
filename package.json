@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.2.2",
+    "@reduxjs/toolkit": "^1.8.1",
     "lodash": "^4.17.21",
     "redux": "^4.2.0",
     "uuid": "^8.3.2"
