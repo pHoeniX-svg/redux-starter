@@ -1,20 +1,36 @@
+import {
+  bugAssignedToUser,
+  bugCreated,
+  bugResolved,
+  getBugsByUser,
+  getUnresolvedBugs,
+} from './store/bugs';
 import configureStore from './store/configureStore';
-import * as actions from './store/projects';
+import { projectCreated } from './store/projects';
+import { userCreated } from './store/users';
 
 const store = configureStore();
-type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 
 store.subscribe(() => {
   console.log('Store Changed');
 });
 
-store.dispatch(actions.projectCreated({ name: 'Project 01' }));
-// store.dispatch(actions.bugCreated({ description: 'Bug 2' }));
-// store.dispatch(actions.bugCreated({ description: 'Bug 3' }));
-// store.dispatch(actions.bugResolved({ id: 1 }));
-// store.dispatch(actions.bugRemoved({ id: 2 }));
+store.dispatch(projectCreated({ name: 'Project 01' }));
+store.dispatch(userCreated({ name: 'User 01' }));
+store.dispatch(userCreated({ name: 'User 02' }));
+store.dispatch(bugCreated({ description: 'Bug 1' }));
+store.dispatch(bugCreated({ description: 'Bug 2' }));
+store.dispatch(bugCreated({ description: 'Bug 3' }));
+store.dispatch(bugCreated({ description: 'Bug 4' }));
+store.dispatch(bugAssignedToUser({ bugId: 1, userId: 2 }));
+store.dispatch(bugResolved({ id: 1 }));
 
-console.log(store.getState());
+const unresolvedBugs = getUnresolvedBugs(store.getState());
+const bugsByUser = getBugsByUser(2)(store.getState());
+
+console.log(unresolvedBugs);
+console.log(bugsByUser);
 
 // declare global {
 //   interface Window {

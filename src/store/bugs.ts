@@ -1,9 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '..';
 import { BugState } from './types';
-
-function withPayloadType<PayloadType>() {
-  return (type: PayloadType) => ({ payload: type });
-}
 
 let lastId = 0;
 const initialBugState: BugState = [];
@@ -20,6 +17,15 @@ const bugSlice = createSlice({
       });
     },
 
+    bugAssignedToUser(
+      state,
+      action: PayloadAction<{ bugId: number; userId: number }>
+    ) {
+      const { bugId, userId } = action.payload;
+      const idx = state.findIndex((bug) => bug.id === bugId);
+      state[idx].userId = userId;
+    },
+
     bugRemoved: (state, action: PayloadAction<{ id: number | string }>) => {
       const idx = state.findIndex((bug) => bug.id === action.payload.id);
       idx > -1 && state.splice(idx, 1);
@@ -32,5 +38,18 @@ const bugSlice = createSlice({
   },
 });
 
-export const { bugCreated, bugRemoved, bugResolved } = bugSlice.actions;
+export const { bugCreated, bugRemoved, bugResolved, bugAssignedToUser } =
+  bugSlice.actions;
 export default bugSlice.reducer;
+
+// Selector: Returns result from cache if available
+export const getUnresolvedBugs = createSelector(
+  (state: RootState) => state.entities.bugs,
+  (bugs) => bugs.filter((bug) => !bug.resolved)
+);
+
+export const getBugsByUser = (userId: number) =>
+  createSelector(
+    (state: RootState) => state.entities.bugs,
+    (bugs) => bugs.filter((bug) => bug.userId === userId)
+  );
