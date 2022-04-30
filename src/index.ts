@@ -8,10 +8,11 @@ store.subscribe(() => {
   console.log('Store Changed');
 });
 
-store.dispatch(actions.addBug({}));
-store.dispatch(actions.addBug({ description: 'Bug 2' }));
-store.dispatch(actions.addBug({ description: 'Bug 3' }));
-store.dispatch(actions.resolveBug({ id: 1 }));
+store.dispatch(actions.bugCreated({ description: 'Bug 1' }));
+store.dispatch(actions.bugCreated({ description: 'Bug 2' }));
+store.dispatch(actions.bugCreated({ description: 'Bug 3' }));
+store.dispatch(actions.bugResolved({ id: 1 }));
+// store.dispatch(actions.bugRemoved({ id: 2 }));
 
 console.log(store.getState());
 

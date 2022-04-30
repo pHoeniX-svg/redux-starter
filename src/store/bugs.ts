@@ -1,14 +1,9 @@
-import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BugState } from './types';
-// BugActions,
-function withPayloadType<T>() {
-  return (t: T) => ({ payload: t });
-}
 
-// Action Creators
-export const addBug = createAction('ADD_BUG');
-export const removeBug = createAction('REMOVE_BUG');
-export const resolveBug = createAction('RESOLVE_BUG');
+function withPayloadType<PayloadType>() {
+  return (type: PayloadType) => ({ payload: type });
+}
 
 // Reducer
 
@@ -16,19 +11,29 @@ let lastId = 0;
 
 const initialBugState: BugState = [];
 
-export default createReducer(initialBugState, {
-  [addBug.type]: (bugs, action: PayloadAction<{ description: string }>) => {
-    bugs.push({
-      id: ++lastId,
-      description: action.payload.description,
-      resolved: false,
-    });
-  },
-  [removeBug.type]: (bugs, action: PayloadAction<{ id: number | string }>) => {
-    bugs.filter((bug) => bug.id !== action.payload.id);
-  },
-  [resolveBug.type]: (bugs, action: PayloadAction<{ id: number | string }>) => {
-    const idx = bugs.findIndex((bug) => bug.id === action.payload.id);
-    bugs[idx].resolved = true;
+const bugSlice = createSlice({
+  name: 'bugs',
+  initialState: initialBugState,
+  reducers: {
+    bugCreated: (state, action: PayloadAction<{ description: string }>) => {
+      state.push({
+        id: ++lastId,
+        description: action.payload.description,
+        resolved: false,
+      });
+    },
+
+    bugRemoved: (state, action: PayloadAction<{ id: number | string }>) => {
+      const idx = state.findIndex((bug) => bug.id === action.payload.id);
+      idx > -1 && state.splice(idx, 1);
+    },
+
+    bugResolved: (state, action: PayloadAction<{ id: number | string }>) => {
+      const idx = state.findIndex((bug) => bug.id === action.payload.id);
+      state[idx].resolved = true;
+    },
   },
 });
+
+export const { bugCreated, bugRemoved, bugResolved } = bugSlice.actions;
+export default bugSlice.reducer;
