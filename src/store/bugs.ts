@@ -5,10 +5,7 @@ function withPayloadType<PayloadType>() {
   return (type: PayloadType) => ({ payload: type });
 }
 
-// Reducer
-
 let lastId = 0;
-
 const initialBugState: BugState = [];
 
 const bugSlice = createSlice({

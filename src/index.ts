@@ -1,5 +1,5 @@
-import * as actions from './store/bugs';
 import configureStore from './store/configureStore';
+import * as actions from './store/projects';
 
 const store = configureStore();
 type RootState = ReturnType<typeof store.getState>;
@@ -8,10 +8,10 @@ store.subscribe(() => {
   console.log('Store Changed');
 });
 
-store.dispatch(actions.bugCreated({ description: 'Bug 1' }));
-store.dispatch(actions.bugCreated({ description: 'Bug 2' }));
-store.dispatch(actions.bugCreated({ description: 'Bug 3' }));
-store.dispatch(actions.bugResolved({ id: 1 }));
+store.dispatch(actions.projectCreated({ name: 'Project 01' }));
+// store.dispatch(actions.bugCreated({ description: 'Bug 2' }));
+// store.dispatch(actions.bugCreated({ description: 'Bug 3' }));
+// store.dispatch(actions.bugResolved({ id: 1 }));
 // store.dispatch(actions.bugRemoved({ id: 2 }));
 
 console.log(store.getState());
