@@ -1,16 +1,16 @@
-type BugAdded = {
+export type BugAdded = {
   type: 'ADD_BUG';
   payload: {
     description: string;
   };
 };
-type BugRemoved = {
+export type BugRemoved = {
   type: 'REMOVE_BUG';
   payload: {
     id: string | number;
   };
 };
-type BugResolved = {
+export type BugResolved = {
   type: 'RESOLVE_BUG';
   payload: {
     id: string | number;

@@ -1,60 +1,34 @@
-import { BugActions, BugState } from './types';
-
-// Action Types
-const ADD_BUG = 'ADD_BUG';
-const REMOVE_BUG = 'REMOVE_BUG';
-const RESOLVE_BUG = 'RESOLVE_BUG';
+import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { BugState } from './types';
+// BugActions,
+function withPayloadType<T>() {
+  return (t: T) => ({ payload: t });
+}
 
 // Action Creators
-export const addBug = (description: string): BugActions => ({
-  type: ADD_BUG,
-  payload: {
-    description,
-  },
-});
-export const removeBug = (id: number): BugActions => ({
-  type: REMOVE_BUG,
-  payload: {
-    id,
-  },
-});
-export const resolveBug = (id: number): BugActions => ({
-  type: RESOLVE_BUG,
-  payload: {
-    id,
-  },
-});
+export const addBug = createAction('ADD_BUG');
+export const removeBug = createAction('REMOVE_BUG');
+export const resolveBug = createAction('RESOLVE_BUG');
 
-// rEDUCER
+// Reducer
 
 let lastId = 0;
-const initialState: BugState = [];
 
-export default function reducer(state = initialState, action: BugActions) {
-  switch (action.type) {
-    case ADD_BUG:
-      return [
-        ...state,
-        {
-          id: ++lastId,
-          description: action.payload.description,
-          resolved: false,
-        },
-      ];
+const initialBugState: BugState = [];
 
-    case REMOVE_BUG:
-      return state.filter((bug) => bug.id !== action.payload.id);
-
-    case RESOLVE_BUG:
-      return state.map((bug) =>
-        bug.id === action.payload.id
-          ? {
-              ...bug,
-              resolved: true,
-            }
-          : bug
-      );
-    default:
-      return state;
-  }
-}
+export default createReducer(initialBugState, {
+  [addBug.type]: (bugs, action: PayloadAction<{ description: string }>) => {
+    bugs.push({
+      id: ++lastId,
+      description: action.payload.description,
+      resolved: false,
+    });
+  },
+  [removeBug.type]: (bugs, action: PayloadAction<{ id: number | string }>) => {
+    bugs.filter((bug) => bug.id !== action.payload.id);
+  },
+  [resolveBug.type]: (bugs, action: PayloadAction<{ id: number | string }>) => {
+    const idx = bugs.findIndex((bug) => bug.id === action.payload.id);
+    bugs[idx].resolved = true;
+  },
+});
