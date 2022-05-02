@@ -1,9 +1,7 @@
-import { Middleware } from 'redux';
-
-export const logger: Middleware = (store) => (next) => (action) => {
-  console.log('STORE', store);
-  console.log('NEXT', next);
-  console.log('ACTION', action);
+// import { Middleware, MiddlewareAPI } from 'redux';
+// @ts-ignore
+export const logger = (params) => (store) => (next) => (action) => {
+  console.log('logging to', params);
   next(action);
 };
 // export const logger =

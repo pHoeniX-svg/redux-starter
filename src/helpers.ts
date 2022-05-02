@@ -1,3 +1,3 @@
-function withPayloadType<PayloadType>() {
-  return (type: PayloadType) => ({ payload: type });
+function payload<T>() {
+  return (type: T) => ({ payload: type });
 }

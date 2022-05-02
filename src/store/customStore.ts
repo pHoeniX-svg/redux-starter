@@ -21,6 +21,6 @@ function createStore<T, A>(reducer: (state: T, action: A) => T) {
 
 export default createStore(reducer);
 
-// import { applyMiddleware } from 'redux';
 // Middleware configuration when not using reduxjs-toolkit
+// import { applyMiddleware, createStore } from 'redux';
 // const store = createStore(reducer, applyMiddleware(logger))
