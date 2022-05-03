@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
 app.use(express.json());
 
@@ -26,6 +28,6 @@ app.use('/api/bugs', require('./routes/bugs'));
 //   res.json(bug);
 // });
 
-app.listen(9001, () => {
-  console.log('Node server started on port 9001.');
+app.listen(PORT, () => {
+  console.log(`Node server started on port ${PORT}.`);
 });

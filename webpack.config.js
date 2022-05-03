@@ -33,7 +33,7 @@ module.exports = {
     hot: true,
     liveReload: false,
     open: true,
-    port: 9000,
+    port: 3000,
   },
   // mode: 'development',
 };
