@@ -1,16 +1,22 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
+import { apiRequestStart } from './api';
 import { BugState } from './types';
 
 let lastId = 0;
-const initialBugState: BugState = [];
+
+const initialState = {
+  list: [] as BugState,
+  loading: false,
+  lastFetch: null,
+};
 
 const bugSlice = createSlice({
   name: 'bugs',
-  initialState: initialBugState,
+  initialState,
   reducers: {
     bugCreated: (state, action: PayloadAction<{ description: string }>) => {
-      state.push({
+      state.list.push({
         id: ++lastId,
         description: action.payload.description,
         resolved: false,
@@ -22,34 +28,63 @@ const bugSlice = createSlice({
       action: PayloadAction<{ bugId: number; userId: number }>
     ) {
       const { bugId, userId } = action.payload;
-      const idx = state.findIndex((bug) => bug.id === bugId);
-      state[idx].userId = userId;
+      const idx = state.list.findIndex((bug) => bug.id === bugId);
+      state.list[idx].userId = userId;
     },
 
     bugRemoved: (state, action: PayloadAction<{ id: number | string }>) => {
-      const idx = state.findIndex((bug) => bug.id === action.payload.id);
-      idx > -1 && state.splice(idx, 1);
+      const idx = state.list.findIndex((bug) => bug.id === action.payload.id);
+      idx > -1 && state.list.splice(idx, 1);
     },
 
     bugResolved: (state, action: PayloadAction<{ id: number | string }>) => {
-      const idx = state.findIndex((bug) => bug.id === action.payload.id);
-      state[idx].resolved = true;
+      const idx = state.list.findIndex((bug) => bug.id === action.payload.id);
+      state.list[idx].resolved = true;
+    },
+
+    bugsRequested: (state) => {
+      state.loading = true;
+    },
+
+    bugsRecieved: (state, action: PayloadAction<BugState>) => {
+      state.list = action.payload;
+      state.loading = false;
+    },
+
+    bugsRequestFailed: (state) => {
+      state.loading = false;
     },
   },
 });
 
-export const { bugCreated, bugRemoved, bugResolved, bugAssignedToUser } =
-  bugSlice.actions;
+export const {
+  bugCreated,
+  bugRemoved,
+  bugResolved,
+  bugAssignedToUser,
+  bugsRecieved,
+  bugsRequested,
+  bugsRequestFailed,
+} = bugSlice.actions;
 export default bugSlice.reducer;
+
+// Action creators
+export const loadBugs = () =>
+  apiRequestStart({
+    url: '/bugs',
+    onStart: bugsRequested.type,
+    onSuccess: bugsRecieved.type,
+    onError: bugsRequestFailed.type,
+  });
 
 // Selector: Returns result from cache if available
 export const getUnresolvedBugs = createSelector(
-  (state: RootState) => state.entities.bugs,
+  (state: RootState) => state.entities.bugs.list,
   (bugs) => bugs.filter((bug) => !bug.resolved)
 );
 
 export const getBugsByUser = (userId: number) =>
   createSelector(
-    (state: RootState) => state.entities.bugs,
+    (state: RootState) => state.entities.bugs.list,
     (bugs) => bugs.filter((bug) => bug.userId === userId)
   );

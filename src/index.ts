@@ -1,5 +1,5 @@
 // @ts-nocheck
-import * as actions from './store/api';
+import { loadBugs } from './store/bugs';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
@@ -15,9 +15,10 @@ export type RootState = ReturnType<typeof store.getState>;
 //   payload: { message: 'an error occured' },
 // });
 
-store.dispatch(
-  actions.apiRequestStart({
-    url: '/bugs',
-    onSuccess: 'bugs/bugsRecieved',
-  })
-);
+store.dispatch(loadBugs());
+// store.dispatch(
+//   actions.apiRequestStart({
+//     url: '/bugs',
+//     onSuccess: 'bugs/bugsRecieved',
+//   })
+// );
