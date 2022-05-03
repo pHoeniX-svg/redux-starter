@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --mode=development",
-    "build": "webpack"
+    "build": "webpack",
+    "server": "yarn --cwd server start"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",
