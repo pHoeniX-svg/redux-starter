@@ -8,7 +8,7 @@ let lastId = 0;
 const initialState = {
   list: [] as BugState,
   loading: false,
-  lastFetch: null,
+  lastFetch: null as null | number,
 };
 
 const bugSlice = createSlice({
@@ -49,6 +49,7 @@ const bugSlice = createSlice({
     bugsRecieved: (state, action: PayloadAction<BugState>) => {
       state.list = action.payload;
       state.loading = false;
+      state.lastFetch = Date.now();
     },
 
     bugsRequestFailed: (state) => {
