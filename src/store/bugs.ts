@@ -1,9 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import moment from 'moment';
 import { RootState } from '..';
 import { apiRequestStart } from './api';
-import { BugState } from './types';
-
-let lastId = 0;
+import { BugState, IBug } from './types';
 
 const initialState = {
   list: [] as BugState,
@@ -15,12 +14,8 @@ const bugSlice = createSlice({
   name: 'bugs',
   initialState,
   reducers: {
-    bugCreated: (state, action: PayloadAction<{ description: string }>) => {
-      state.list.push({
-        id: ++lastId,
-        description: action.payload.description,
-        resolved: false,
-      });
+    bugCreated: (state, action: PayloadAction<IBug>) => {
+      state.list.push(action.payload);
     },
 
     bugAssignedToUser(
@@ -69,12 +64,31 @@ export const {
 } = bugSlice.actions;
 export default bugSlice.reducer;
 
+const url = '/bugs';
+
 // Action creators
-export const loadBugs = () =>
+export const loadBugs = () => (dispatch: any, getState: any) => {
+  const { lastFetch } = getState().entities.bugs;
+
+  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
+  if (diffInMinutes < 10) return;
+
+  dispatch(
+    apiRequestStart({
+      url: url,
+      onStart: bugsRequested.type,
+      onSuccess: bugsRecieved.type,
+      onError: bugsRequestFailed.type,
+    })
+  );
+};
+
+export const addBugs = (bug: Partial<IBug>) =>
   apiRequestStart({
-    url: '/bugs',
-    onStart: bugsRequested.type,
-    onSuccess: bugsRecieved.type,
+    url: url,
+    method: 'post',
+    data: bug,
+    onSuccess: bugCreated.type,
     onError: bugsRequestFailed.type,
   });
 

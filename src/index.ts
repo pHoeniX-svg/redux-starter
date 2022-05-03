@@ -1,11 +1,9 @@
-import { loadBugs } from './store/bugs';
+import { addBugs } from './store/bugs';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type RootStore = typeof store;
 
-store.dispatch(loadBugs());
-
-setTimeout(() => {
-  store.dispatch(loadBugs());
-}, 2000);
+store.dispatch(addBugs({ description: 'a' }));

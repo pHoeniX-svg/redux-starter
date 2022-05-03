@@ -2,9 +2,11 @@ import { createAction } from '@reduxjs/toolkit';
 
 export const apiRequestStart = createAction<{
   url: string;
-  onStart: string;
-  onSuccess: string;
-  onError: string;
+  method?: string;
+  data?: any;
+  onStart?: string;
+  onSuccess?: string;
+  onError?: string;
 }>('api/RequestStart');
 
 export const apiRequestSuccess =
