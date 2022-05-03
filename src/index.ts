@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { loadBugs } from './store/bugs';
 import configureStore from './store/configureStore';
 

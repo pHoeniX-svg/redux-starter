@@ -12,4 +12,6 @@ export const apiRequestSuccess =
     'api/RequestSuccess'
   );
 
-export const apiRequestError = createAction<string>('api/RequestError');
+export const apiRequestError = createAction<{ message: string }>(
+  'api/RequestError'
+);

@@ -25,7 +25,7 @@ export const api: Middleware =
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {
       const e = error as AxiosError;
-      dispatch(actions.apiRequestError(e.message));
-      if (onError) dispatch({ type: onError, payload: e.message });
+      dispatch(actions.apiRequestError({ message: e.message }));
+      if (onError) dispatch({ type: onError, payload: { message: e.message } });
     }
   };

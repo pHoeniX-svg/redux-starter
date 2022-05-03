@@ -63,8 +63,8 @@ export const {
   bugRemoved,
   bugResolved,
   bugAssignedToUser,
-  bugsRecieved,
   bugsRequested,
+  bugsRecieved,
   bugsRequestFailed,
 } = bugSlice.actions;
 export default bugSlice.reducer;
