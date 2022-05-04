@@ -8,14 +8,18 @@
   "scripts": {
     "dev": "webpack serve --config ./webpack.config.js",
     "build": "webpack",
-    "server": "yarn --cwd server start"
+    "server": "yarn --cwd server start",
+    "test": "jest --watchAll --detectOpenHandles"
   },
   "devDependencies": {
+    "@types/jest": "^27.5.0",
     "@types/lodash": "^4.14.182",
     "@types/uuid": "^8.3.4",
+    "jest": "^28.0.3",
     "source-map-loader": "^3.0.0",
+    "ts-jest": "^28.0.1",
     "ts-loader": "^9.2.6",
-    "typescript": "^4.4.3",
+    "typescript": "^4.6.4",
     "webpack": "^5.58.1",
     "webpack-cli": "^4.9.0",
     "webpack-dev-server": "^4.3.1"
