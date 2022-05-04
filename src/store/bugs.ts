@@ -56,7 +56,7 @@ const bugSlice = createSlice({
   },
 });
 
-export const {
+const {
   bugCreated,
   bugRemoved,
   bugResolved,
@@ -69,7 +69,7 @@ export default bugSlice.reducer;
 
 const url = '/bugs';
 
-/* ACTION CREATORS */
+/* ACTION CREATORS  */
 export const loadBugs = () => (dispatch: any, getState: any) => {
   const { lastFetch } = getState().entities.bugs as { lastFetch: number };
 

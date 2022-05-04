@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   devtool: 'source-map', // generates .js.map source map and .js bundle
   entry: './src/index.ts',
   output: {
@@ -35,5 +36,4 @@ module.exports = {
     open: true,
     port: 3000,
   },
-  // mode: 'development',
 };

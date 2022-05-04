@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --mode=development",
+    "dev": "webpack serve --config ./webpack.config.js",
     "build": "webpack",
     "server": "yarn --cwd server start"
   },
