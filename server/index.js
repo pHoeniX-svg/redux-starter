@@ -5,6 +5,11 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
+
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
+
+// built-in middleware for json
 app.use(express.json());
 
 app.use('/api/bugs', require('./routes/bugs'));

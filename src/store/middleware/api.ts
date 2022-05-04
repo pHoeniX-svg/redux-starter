@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios';
-import { Middleware } from 'redux';
+import { AnyAction, Middleware } from 'redux';
 import * as actions from '../api';
 
 export const api: Middleware =
   ({ dispatch }) =>
   (next) =>
-  async (action) => {
+  async <A extends AnyAction>(action: A) => {
     if (action.type !== actions.apiRequestStart.type) return next(action);
 
     const { url, method, data, onStart, onSuccess, onError } = action.payload;

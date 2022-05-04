@@ -30,6 +30,8 @@ const bugSlice = createSlice({
     bugRemoved: (state, action: PayloadAction<{ id: number | string }>) => {
       const idx = state.list.findIndex((bug) => bug.id === action.payload.id);
       idx > -1 && state.list.splice(idx, 1);
+
+// state.list.splice(state.list.indexOf(bug), 1)
     },
 
     bugResolved: (state, action: PayloadAction<{ id: number | string }>) => {
@@ -90,6 +92,14 @@ export const addBugs = (bug: Partial<IBug>) =>
     data: bug,
     onSuccess: bugCreated.type,
     onError: bugsRequestFailed.type,
+  });
+
+export const resolveBug = (id: number | string) =>
+  apiRequestStart({
+    url: `${url}/${id}`,
+    method: 'patch',
+    data: { resolved: true },
+    onSuccess: bugResolved.type,
   });
 
 // Selector: Returns result from cache if available
