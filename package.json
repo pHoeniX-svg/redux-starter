@@ -15,6 +15,7 @@
     "@types/jest": "^27.5.0",
     "@types/lodash": "^4.14.182",
     "@types/uuid": "^8.3.4",
+    "axios-mock-adapter": "^1.20.0",
     "jest": "^28.0.3",
     "source-map-loader": "^3.0.0",
     "ts-jest": "^28.0.1",

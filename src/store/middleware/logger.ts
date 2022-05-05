@@ -2,7 +2,7 @@
 // @ts-ignore
 export const logger = (params) => (store) => (next) => (action) => {
   console.log('logging to', params);
-  next(action);
+  return next(action);
 };
 // export const logger =
 //   <A>(store) =>
