@@ -13,6 +13,6 @@ describe('bugsSlice', () => {
 
     const store = configureStore();
     await store.dispatch(createBug(bug));
-    expect(store.getState().entities.bugs.list).toHaveLength(1);
+    expect(store.getState().entities.bugs.list).toContainEqual(savedBug);
   });
 });
