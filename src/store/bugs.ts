@@ -4,10 +4,16 @@ import { RootState } from '..';
 import { apiRequestStart } from './api';
 import { BugState, IBug } from './types';
 
-const initialState = {
-  list: [] as BugState,
+type BugStateType = {
+  list: BugState;
+  loading?: boolean;
+  lastFetch?: null | number;
+};
+
+const initialState: BugStateType = {
+  list: [],
   loading: false,
-  lastFetch: null as null | number,
+  lastFetch: null,
 };
 
 /* BUGS SLICE */

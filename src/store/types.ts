@@ -1,9 +1,10 @@
 export interface IBug {
-  id: string | number;
+  id: number;
   userId?: number;
-  description: string;
-  resolved: boolean;
+  description?: string;
+  resolved?: boolean;
 }
+
 export type BugState = IBug[];
 
 export interface IProject {
