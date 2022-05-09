@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectState } from './types';
+import { apiRequestStart } from './api';
+import { IProject, ProjectState } from './types';
 
 let lastId = 0;
 const initialProjectState: ProjectState = [];
@@ -16,3 +17,13 @@ const projectSlice = createSlice({
 
 export const { projectCreated } = projectSlice.actions;
 export default projectSlice.reducer;
+
+const url = '/projects';
+
+export const createProject = (project: IProject) =>
+  apiRequestStart({
+    url,
+    method: 'post',
+    data: project,
+    onSuccess: projectCreated.type,
+  });

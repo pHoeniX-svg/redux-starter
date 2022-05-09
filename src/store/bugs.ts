@@ -82,7 +82,7 @@ export const loadBugs = () => (dispatch: any, getState: any) => {
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
   if (diffInMinutes < 10) return;
 
-  dispatch(
+  return dispatch(
     apiRequestStart({
       url,
       onStart: bugsRequested.type,
